@@ -50,25 +50,47 @@ Quartly follows a modular component-based architecture focused on scalability an
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
+
+# Light Version
 
 ### Dashboard Overview
-![Dashboard](screenshots/quartly_dashboard.png)
+![Dashboard](screenshots/quartly_dashboard_light.png)
 
 ### Transaction List
-![Heatmap](screenshots/quartly_transaction_list.png)
+![Heatmap](screenshots/quartly_transaction_list_light.png)
 
 ### Transaction Form
-![Pipeline](screenshots/quartly_transaction_form.png)
+![Pipeline](screenshots/quartly_transaction_form_light.png)
 
 ### Dynamic Pie Chart
-![Pipeline](screenshots/quartly_pie_chart.png)
+![Pipeline](screenshots/quartly_pie_chart_light.png)
 
 ### Dynamic Bar Graph
-![Pipeline](screenshots/quartly_bar_graph.png)
+![Pipeline](screenshots/quartly_bar_graph_light.png)
 
 ### Daily Expenses Histogram
-![Pipeline](screenshots/quartly_histogram.png)
+![Pipeline](screenshots/quartly_histogram_light.png)
+
+# Dark Version
+
+### Dashboard Overview
+![Dashboard](screenshots/quartly_dashboard_dark.png)
+
+### Transaction List
+![Heatmap](screenshots/quartly_transaction_list_dark.png)
+
+### Transaction Form
+![Pipeline](screenshots/quartly_transaction_form_dark.png)
+
+### Dynamic Pie Chart
+![Pipeline](screenshots/quartly_pie_chart_dark.png)
+
+### Dynamic Bar Graph
+![Pipeline](screenshots/quartly_bar_graph_dark.png)
+
+### Daily Expenses Histogram
+![Pipeline](screenshots/quartly_histogram_dark.png)
 
 ---
 
