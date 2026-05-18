@@ -1,0 +1,54 @@
+<svg
+  width="256"
+  height="256"
+  viewBox="0 0 256 256"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+
+  <!-- Background -->
+
+  <rect
+    width="256"
+    height="256"
+    rx="64"
+    fill="#0F1115"
+  />
+
+  <!-- Outer Ring -->
+
+  <circle
+    cx="128"
+    cy="128"
+    r="68"
+
+    stroke="#40E0D0"
+    stroke-width="18"
+
+    opacity="0.95"
+  />
+
+  <!-- Inner Cut -->
+
+  <circle
+    cx="128"
+    cy="128"
+    r="38"
+
+    fill="#0F1115"
+  />
+
+  <!-- Q Tail -->
+
+  <path
+    d="
+      M160 160
+      L196 196
+    "
+
+    stroke="white"
+    stroke-width="16"
+    stroke-linecap="round"
+  />
+
+</svg>
