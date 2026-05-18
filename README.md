@@ -50,25 +50,29 @@ Quartly follows a modular component-based architecture focused on scalability an
 
 ---
 
-# 📸 Screenshots
+## 📸 Screenshots
+
+### Light Version
 
 ### Dashboard Overview
-![Dashboard](screenshots/quartly_dashboard.png)
+![Dashboard](screenshots/quartly_dashboard_light.png)
 
-### Transaction List
-![Heatmap](screenshots/quartly_transaction_list.png)
+### Transaction List + Form
+![Transactions](screenshots/quartly_transaction_form_and_list_light.png)
 
-### Transaction Form
-![Pipeline](screenshots/quartly_transaction_form.png)
+### Pie Chart + Bar Graph + Histogram
+![Analytics](screenshots/quartly_piechart_bargraph_histogram_light.png)
 
-### Dynamic Pie Chart
-![Pipeline](screenshots/quartly_pie_chart.png)
+### Dark Version
 
-### Dynamic Bar Graph
-![Pipeline](screenshots/quartly_bar_graph.png)
+### Dashboard Overview
+![Dashboard](screenshots/quartly_dashboard_dark.png)
 
-### Daily Expenses Histogram
-![Pipeline](screenshots/quartly_histogram.png)
+### Transaction List + Form
+![Transactions](screenshots/quartly_transaction_form_and_list_dark.png)
+
+### Pie Chart + Bar Graph + Histogram
+![Analytics](screenshots/quartly_piechart_bargraph_histogram_dark.png)
 
 ---
 
