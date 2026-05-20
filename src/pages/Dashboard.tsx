@@ -22,6 +22,11 @@ import {
   useFinance,
 } from "../context/FinanceContext";
 
+import {
+  Moon,
+  Sun,
+} from "lucide-react";
+
 export default function Dashboard() {
 
   const [sidebarOpen, setSidebarOpen] =
@@ -329,28 +334,36 @@ export default function Dashboard() {
               </button>
 
               <button
-                onClick={() =>
-                  setDarkMode(
-                    !darkMode
-                  )
-                }
+  onClick={() =>
+    setDarkMode(!darkMode)
+  }
 
-                className="
-                  glass
+  className="
+    glass
 
-                  h-12 w-12
+    h-12
+    w-12
 
-                  rounded-2xl
+    rounded-2xl
 
-                  text-xl
-                "
-              >
+    grid
+    place-items-center
 
-                {darkMode
-                  ? "☀︎"
-                  : "⏾"}
+    shrink-0
 
-              </button>
+    transition-all
+    duration-200
+  "
+>
+
+  {darkMode
+
+    ? <Sun size={20} />
+
+    : <Moon size={20} />
+  }
+
+</button>
 
             </div>
 

@@ -52,17 +52,12 @@ Quartly follows a modular component-based architecture focused on scalability an
 
 ## 📸 Screenshots
 
-<<<<<<< HEAD
-### Light Version
-=======
-# Light Version
->>>>>>> 456634bdffeed4c698b9b1c3d1bb2cb48606e8b5
+## Light Version
 
-### Dashboard Overview
+#### Dashboard Overview
 ![Dashboard](screenshots/quartly_dashboard_light.png)
 
-<<<<<<< HEAD
-### Transaction List + Form
+### Transaction List + Transaction Form
 ![Transactions](screenshots/quartly_transaction_form_and_list_light.png)
 
 ### Pie Chart + Bar Graph + Histogram
@@ -73,47 +68,11 @@ Quartly follows a modular component-based architecture focused on scalability an
 ### Dashboard Overview
 ![Dashboard](screenshots/quartly_dashboard_dark.png)
 
-### Transaction List + Form
+### Transaction List + Transaction Form
 ![Transactions](screenshots/quartly_transaction_form_and_list_dark.png)
 
 ### Pie Chart + Bar Graph + Histogram
 ![Analytics](screenshots/quartly_piechart_bargraph_histogram_dark.png)
-=======
-### Transaction List
-![Heatmap](screenshots/quartly_transaction_list_light.png)
-
-### Transaction Form
-![Pipeline](screenshots/quartly_transaction_form_light.png)
-
-### Dynamic Pie Chart
-![Pipeline](screenshots/quartly_pie_chart_light.png)
-
-### Dynamic Bar Graph
-![Pipeline](screenshots/quartly_bar_graph_light.png)
-
-### Daily Expenses Histogram
-![Pipeline](screenshots/quartly_histogram_light.png)
-
-# Dark Version
-
-### Dashboard Overview
-![Dashboard](screenshots/quartly_dashboard_dark.png)
-
-### Transaction List
-![Heatmap](screenshots/quartly_transaction_list_dark.png)
-
-### Transaction Form
-![Pipeline](screenshots/quartly_transaction_form_dark.png)
-
-### Dynamic Pie Chart
-![Pipeline](screenshots/quartly_pie_chart_dark.png)
-
-### Dynamic Bar Graph
-![Pipeline](screenshots/quartly_bar_graph_dark.png)
-
-### Daily Expenses Histogram
-![Pipeline](screenshots/quartly_histogram_dark.png)
->>>>>>> 456634bdffeed4c698b9b1c3d1bb2cb48606e8b5
 
 ---
 
