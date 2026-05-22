@@ -1,7 +1,7 @@
-import GlassCard from "./GlassCard";
-
 interface Props {
+
   title: string;
+
   value: string;
 }
 
@@ -12,33 +12,55 @@ export default function StatCard({
 
   return (
 
-    <GlassCard
+    <div
       className="
-        h-[140px]
+        glass
+
+        rounded-[32px]
+
         p-6
-        flex flex-col
-        justify-between
+
+        will-change-transform
       "
+
+      style={{
+
+        transition:
+          "transform 280ms ease, background-color 220ms ease, box-shadow 220ms ease",
+      }}
+
+      onMouseEnter={(e) => {
+
+        e.currentTarget.style.transform =
+          "scale(1.03)";
+      }}
+
+      onMouseLeave={(e) => {
+
+        e.currentTarget.style.transform =
+          "scale(1)";
+      }}
     >
 
       <p className="
-        text-sm text-gray-500
-        font-medium
+        text-[#8ea0b5]
       ">
+
         {title}
+
       </p>
 
       <h2 className="
         text-4xl
         font-semibold
-        tracking-tight
-        leading-none
-        overflow-hidden
+
+        mt-3
       ">
+
         {value}
+
       </h2>
 
-    </GlassCard>
-
+    </div>
   );
 }
