@@ -97,21 +97,37 @@ export default function WeeklyActivity() {
               stroke="#9ca3af"
             />
 
-            <Tooltip />
+<Tooltip
+  contentStyle={{
+    background: "#ffffff",
+    border: "1px solid #2D2D2D",
+    borderRadius: "16px",
+    color: "#ffffff",
+  }}
+/>
 
-            <Line
-              type="monotone"
-              dataKey="amount"
+<Line
+  type="monotone"
+  dataKey="amount"
 
-              stroke="#8b5cf6"
+  stroke="#7bc9d8"
 
-              strokeWidth={3}
+  strokeWidth={4}
 
-              dot={{
-                r: 4,
-                fill: "#8b5cf6",
-              }}
-            />
+  dot={{
+    r: 5,
+    fill: "#7bc9d8",
+    stroke: "#ffffff",
+    strokeWidth: 2,
+  }}
+
+  activeDot={{
+    r: 8,
+    fill: "#9cccf0",
+    stroke: "#ffffff",
+    strokeWidth: 2,
+  }}
+/>
 
           </LineChart>
 

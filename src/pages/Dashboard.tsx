@@ -18,6 +18,9 @@ import MonthlyBarChart from "../components/charts/MonthlyBarChart";
 
 import WeeklyActivity from "../components/charts/WeeklyActivity";
 
+import HoverCard from "../components/HoverCard";
+
+import AnimatedButton from "../components/AnimatedButton";
 import {
   useFinance,
 } from "../context/FinanceContext";
@@ -107,7 +110,7 @@ export default function Dashboard() {
     doc.setFontSize(26);
 
     doc.text(
-      "Quartly",
+      "Quartly - An App by Kenny Richardson",
       20,
       25
     );
@@ -295,7 +298,7 @@ export default function Dashboard() {
                 tracking-tight
               ">
 
-                Quartly - An App by Ken Richardson
+                Quartly - An App by Kenny Richardson
 
               </h1>
 
@@ -315,7 +318,7 @@ export default function Dashboard() {
               gap-3
             ">
 
-              <button
+              <AnimatedButton variant="secondary"
                 onClick={exportPDF}
 
                 className="
@@ -331,7 +334,7 @@ export default function Dashboard() {
 
                 Export PDF
 
-              </button>
+              </AnimatedButton>
 
               <button
   onClick={() =>
@@ -419,11 +422,17 @@ export default function Dashboard() {
             gap-6
           ">
 
-            <ExpenseChart />
-
+             <HoverCard>
+             <ExpenseChart/>
+             </HoverCard>
+             
+             <HoverCard>
             <MonthlyBarChart />
+            </HoverCard>
 
+            <HoverCard>
             <WeeklyActivity />
+            </HoverCard>
 
           </div>
 

@@ -11,13 +11,14 @@ import {
 } from "../../context/FinanceContext";
 
 const COLORS = [
-  "#06b6d4",
-  "#8b5cf6",
-  "#ec4899",
-  "#f59e0b",
-  "#10b981",
-  "#ef4444",
-  "#3b82f6",
+  "#67D6E8", // Soft Turquoise
+  "#5F86D9", // Muted Royal Blue
+  "#4FA88B", // Soft Emerald
+  "#8BC5FF", // Mist Blue
+  "#6FC9C2", // Aqua Teal
+  "#7898E8", // Pastel Indigo
+  "#72C7A1", // Sage Green
+  "#A8D8FF", // Ice Blue
 ];
 
 export default function ExpenseChart() {
@@ -74,7 +75,7 @@ export default function ExpenseChart() {
       </div>
 
       <div className="
-        h-[300px] mt-6
+        h-[250px] mt-6
       ">
 
         <ResponsiveContainer
@@ -110,7 +111,14 @@ export default function ExpenseChart() {
 
             </Pie>
 
-            <Tooltip />
+<Tooltip
+  contentStyle={{
+    background: "#ffffff",
+    border: "1px solid #2D2D2D",
+    borderRadius: "16px",
+    color: "#ffffff",
+  }}
+/>
 
           </PieChart>
 

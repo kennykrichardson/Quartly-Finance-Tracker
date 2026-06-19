@@ -34,31 +34,51 @@ export default function MonthlyBarChart() {
     ] += transaction.amount;
   });
 
+const QUARTLY_COLORS = [
+  "#67D6E8", // Soft Turquoise
+  "#5F86D9", // Muted Royal Blue
+  "#4FA88B", // Soft Emerald
+  "#8BC5FF", // Mist Blue
+  "#6FC9C2", // Aqua Teal
+  "#7898E8", // Pastel Indigo
+  "#72C7A1", // Sage Green
+  "#A8D8FF", // Ice Blue
+];
+
+
   const data =
     Object.entries(grouped).map(
-      ([category, amount]) => ({
+      ([category, amount], index) => ({
         category,
         amount,
+        fill:
+          QUARTLY_COLORS[
+            index %
+            QUARTLY_COLORS.length
+          ],
       })
     );
 
   return (
 
     <div className="
-      glass rounded-[32px]
+      glass
+      rounded-[32px]
       p-6
     ">
 
       <div>
 
         <h2 className="
-          text-2xl font-semibold
+          text-2xl
+          font-semibold
         ">
           Category Comparison
         </h2>
 
         <p className="
-          text-gray-500 mt-1
+          text-gray-500
+          mt-1
         ">
           Expense distribution by category
         </p>
@@ -75,11 +95,14 @@ export default function MonthlyBarChart() {
           height="100%"
         >
 
-          <BarChart data={data}>
+          <BarChart
+            data={data}
+          >
 
             <CartesianGrid
               strokeDasharray="3 3"
               stroke="#e5e7eb"
+              opacity={0.5}
             />
 
             <XAxis
@@ -91,20 +114,29 @@ export default function MonthlyBarChart() {
               stroke="#9ca3af"
             />
 
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                background:
+                  "#111111",
+                border:
+                  "1px solid #2D2D2D",
+                borderRadius:
+                  "16px",
+                color:
+                  "#ffffff",
+              }}
+            />
 
             <Bar
-  dataKey="amount"
-
-  fill="#402327"
-  strokeWidth={1}
-  radius={[
-    12,
-    12,
-    0,
-    0,
-  ]}
-/>
+              dataKey="amount"
+              radius={[
+                12,
+                12,
+                0,
+                0,
+              ]}
+              fill="#DC143C"
+            />
 
           </BarChart>
 
