@@ -69,10 +69,10 @@ Quartly follows a modular component-based architecture focused on scalability an
 ![Dashboard](screenshots/quartly_dashboard_dark.png)
 
 ### Transaction List + Transaction Form
-![Transactions](screenshots/quartly_transaction_form_and_list_dark.jpeg)
+![Transactions](screenshots/quartly_transaction_form_and_list_dark.png)
 
 ### Pie Chart + Bar Graph + Histogram
-![Analytics](screenshots/quartly_piechart_bargraph_histogram_dark.png)
+![Analytics](screenshots/quartly_piechart_bargraph_histogram_dark.jpeg)
 
 ---
 
