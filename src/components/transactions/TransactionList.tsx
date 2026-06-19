@@ -23,11 +23,14 @@ interface Props {
   transactions: Transaction[];
 
   darkMode: boolean;
+
+  onOpenModal: () => void;
 }
 
 export default function TransactionList({
   transactions,
   darkMode,
+  onOpenModal,
 }: Props) {
 
   const {
@@ -36,7 +39,7 @@ export default function TransactionList({
 
   const INITIAL_COUNT = 3;
 
-  const [expanded, setExpanded] =
+  const [expanded] =
     useState(false);
 
   const visibleTransactions =
@@ -330,51 +333,51 @@ export default function TransactionList({
       {transactions.length >
         INITIAL_COUNT && (
 
-        <button
+<button
 
-          onClick={() =>
-            setExpanded(
-              !expanded
-            )
-          }
+  onClick={onOpenModal}
 
-          className={`
-            mt-6
+  className={`
+    mt-6
 
-            h-12
-            w-full
+    h-12
+    w-full
 
-            rounded-2xl
+    rounded-2xl
 
-            font-medium
+    font-medium
 
-            transition-all
-            duration-200
+    transition-all
+    duration-200
 
-            ${
-              darkMode
+    ${
+      darkMode
 
-                ? `
-                  bg-[#1b1f27]
-                  hover:bg-[#252a35]
-                `
+        ? `
+          bg-[#101522]
+          text-white
 
-                : `
-                  bg-[#ffffff]
-                  hover:bg-[#f3f4f6]
-                `
-            }
-          `}
-        >
+          hover:bg-[#151b2b]
 
-          {expanded
-            ? "Show Less"
-            : "Show More"}
+          border
+          border-white/5
+        `
 
-        </button>
+        : `
+          bg-white
+          text-black
+
+          hover:bg-[#f8f8f8]
+        `
+    }
+  `}
+>
+  View All Transactions
+</button>
 
       )}
 
     </div>
+    
   );
 }

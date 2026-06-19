@@ -21,6 +21,9 @@ import WeeklyActivity from "../components/charts/WeeklyActivity";
 import HoverCard from "../components/HoverCard";
 
 import AnimatedButton from "../components/AnimatedButton";
+
+import TransactionModal from "../components/transactions/TransactionModal";
+
 import {
   useFinance,
 } from "../context/FinanceContext";
@@ -52,6 +55,10 @@ export default function Dashboard() {
       (acc, t) => acc + t.amount,
       0
     );
+
+    const [transactionModalOpen,
+     setTransactionModalOpen] =
+     useState(false);
 
   const filteredTransactions =
     transactions.filter((transaction) => {
@@ -403,12 +410,12 @@ export default function Dashboard() {
             gap-6
           ">
 
-            <TransactionList
-  transactions={
-    filteredTransactions
-  }
-
+<TransactionList
+  transactions={filteredTransactions}
   darkMode={darkMode}
+  onOpenModal={() =>
+    setTransactionModalOpen(true)
+  }
 />
 
             <TransactionForm />
@@ -439,7 +446,13 @@ export default function Dashboard() {
         </main>
 
       </div>
-
+<TransactionModal
+  open={transactionModalOpen}
+  onClose={() =>
+    setTransactionModalOpen(false)
+  }
+  darkMode={darkMode}
+/>
     </div>
   );
 }
