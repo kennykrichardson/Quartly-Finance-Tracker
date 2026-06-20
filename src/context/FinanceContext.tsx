@@ -9,8 +9,18 @@ import type {
   ReactNode,
 } from "react";
 
+import {
+  useUser,
+} from "../firebase/UserContext";
+
+import {
+  loadTransactions,
+  saveTransaction,
+  removeTransaction,
+} from "../firebase/firestore";
+
 export interface Transaction {
-  id: number;
+  id: string;
   title: string;
   amount: number;
   category: string;
@@ -25,11 +35,11 @@ interface FinanceContextType {
 
   addTransaction: (
     transaction: Omit<Transaction, "id">
-  ) => void;
+  ) => Promise<void>;
 
   deleteTransaction: (
-    id: number
-  ) => void;
+    id: string
+  ) => Promise<void>;
 }
 
 const FinanceContext =
@@ -43,61 +53,163 @@ export function FinanceProvider({
   children: ReactNode;
 }) {
 
-  const [transactions, setTransactions] =
-    useState<Transaction[]>(() => {
+  const user =
+    useUser();
 
-      const saved =
-        localStorage.getItem(
-          "quartly-transactions"
-        );
+  const [transactions,
+    setTransactions] =
+    useState<Transaction[]>([]);
 
-      return saved
-        ? JSON.parse(saved)
-        : [];
-    });
+  useEffect(() => {
+
+    const saved =
+      localStorage.getItem(
+        "quartly-transactions"
+      );
+
+    if (!saved) return;
+
+    setTransactions(
+      JSON.parse(saved)
+    );
+
+  }, []);
 
   useEffect(() => {
 
     localStorage.setItem(
+
       "quartly-transactions",
-      JSON.stringify(transactions)
+
+      JSON.stringify(
+        transactions
+      )
     );
 
   }, [transactions]);
 
-  function addTransaction(
-    transaction: Omit<Transaction, "id">
+  useEffect(() => {
+
+    async function
+    fetchTransactions() {
+
+      if (!user) return;
+
+      try {
+
+        const firestoreTransactions =
+
+          await loadTransactions(
+            user.uid
+          );
+
+        if (
+          firestoreTransactions.length >
+          0
+        ) {
+
+          setTransactions(
+            firestoreTransactions
+          );
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Failed loading transactions",
+          error
+        );
+      }
+    }
+
+    fetchTransactions();
+
+  }, [user]);
+
+  async function addTransaction(
+    transaction:
+      Omit<Transaction, "id">
   ) {
 
     const newTransaction = {
+
       ...transaction,
-      id: Date.now(),
+
+      id:
+        crypto.randomUUID(),
     };
 
     setTransactions((prev) => [
+
       newTransaction,
+
       ...prev,
     ]);
+
+    if (!user) return;
+
+    try {
+
+      await saveTransaction(
+
+        user.uid,
+
+        newTransaction
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Failed saving transaction",
+        error
+      );
+    }
   }
 
-  function deleteTransaction(
-    id: number
+  async function deleteTransaction(
+    id: string
   ) {
 
     setTransactions((prev) =>
+
       prev.filter(
+
         (transaction) =>
+
           transaction.id !== id
       )
     );
+
+    if (!user) return;
+
+    try {
+
+      await removeTransaction(
+
+        user.uid,
+
+        id
+      );
+
+    } catch (error) {
+
+      console.error(
+        "Failed deleting transaction",
+        error
+      );
+    }
   }
 
   return (
 
     <FinanceContext.Provider
+
       value={{
+
         transactions,
+
         addTransaction,
+
         deleteTransaction,
       }}
     >
@@ -105,21 +217,23 @@ export function FinanceProvider({
       {children}
 
     </FinanceContext.Provider>
-
   );
 }
 
 export function useFinance() {
 
   const context =
-    useContext(FinanceContext);
+
+    useContext(
+      FinanceContext
+    );
 
   if (!context) {
 
     throw new Error(
+
       "useFinance must be used within FinanceProvider"
     );
-
   }
 
   return context;
