@@ -1,8 +1,12 @@
 # ✨ Quartly
 
-A sleek and minimalist expense tracking dashboard built with **React**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**.
+A modern cloud-synced personal finance platform built with React, TypeScript, Firebase, Tailwind CSS, and Framer Motion.
 
-Quartly focuses on elegant design, smooth interactions, insightful analytics, and a luxury-inspired glassmorphism UI.
+Quartly helps users track expenses, analyze spending patterns, visualize financial trends, and securely sync data across devices using Google Authentication and Firestore.
+
+## 🌐 Live Demo
+
+https://quartly.onrender.com
 
 ---
 
@@ -10,111 +14,173 @@ Quartly focuses on elegant design, smooth interactions, insightful analytics, an
 
 ```txt
 src/
+├── assets/
 ├── components/
-├── charts/
-├── transactions/
+│   ├── charts/
+│   ├── insights/
+│   ├── transactions/
+│   └── ui/
 ├── context/
+├── firebase/
 ├── pages/
-├── styles/
-└── types/
+├── types/
+└── styles/
 ```
 
-Quartly follows a modular component-based architecture focused on scalability and maintainability.
+Quartly follows a scalable component-based architecture designed for maintainability, performance, and future feature expansion.
 
 ---
 
-# 🌌 Features
+# 🚀 Features
 
-- 💸 Expense tracking
-- 📊 Interactive analytics
-- 📈 Bar graphs & pie charts
-- 🔍 Live search & filtering
-- 🌙 Dark mode
-- 📄 PDF expense export
-- 🧊 Glassmorphism UI
-- 📱 Responsive layout
-- ⚡ Smooth animations
-- 🗂️ Custom categories
-- 🧾 Transaction history
+## Authentication & Cloud Sync
+
+* Google Authentication
+* Firebase Authentication
+* Firestore Cloud Database
+* Persistent User Sessions
+* Cross-Device Data Sync
+
+## Expense Management
+
+* Add Expenses
+* Categorize Expenses
+* Custom Categories
+* Transaction History
+* Search Transactions
+* Transaction Filtering
+
+## Analytics
+
+* Monthly Spending Insights
+* Expense Breakdown
+* Spending Trends
+* Largest Expense Analysis
+* Interactive Charts
+
+## User Experience
+
+* Dark Mode
+* Glassmorphism Design
+* Responsive Layout
+* Smooth Animations
+* Profile Management
+* Cloud Persistence
+
+## Exporting
+
+* PDF Expense Reports
+* Downloadable Spending Records
 
 ---
 
 # 🛠️ Tech Stack
 
-- ⚛️ React
-- 🟦 TypeScript
-- 🎨 Tailwind CSS
-- 🎞️ Framer Motion
-- 📑 jsPDF
-- ⚡ Vite
+### Frontend
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* Framer Motion
+
+### Backend Services
+
+* Firebase Authentication
+* Firestore Database
+
+### Libraries
+
+* jsPDF
+* Lucide React
 
 ---
 
-## 📸 Screenshots
+# 📸 Screenshots
 
-## Light Version
+## Light Mode
 
-#### Dashboard Overview
+### Dashboard
+
 ![Dashboard](screenshots/quartly_dashboard_light.png)
 
-### Transaction List + Transaction Form
+### Transactions
+
 ![Transactions](screenshots/quartly_transaction_form_and_list_light.png)
 
-### Pie Chart + Bar Graph + Histogram
+### Analytics
+
 ![Analytics](screenshots/quartly_piechart_bargraph_histogram_light.jpeg)
 
-### Dark Version
+### Transaction Modal
 
-### Dashboard Overview
+![Transaction Modal](screenshots/quartly_transaction_modal_light.jpeg)
+
+### Insights Page
+
+![Insights Page](screenshots/quartly_insights_page_light.png)
+
+## Dark Mode
+
+### Dashboard
+
 ![Dashboard](screenshots/quartly_dashboard_dark.png)
 
-### Transaction List + Transaction Form
+### Transactions
+
 ![Transactions](screenshots/quartly_transaction_form_and_list_dark.png)
 
-### Pie Chart + Bar Graph + Histogram
+### Analytics
+
 ![Analytics](screenshots/quartly_piechart_bargraph_histogram_dark.jpeg)
 
----
+### Transaction Modal
 
-# 🚀 Installation
+![Transaction Modal](screenshots/quartly_transaction_modal_dark.jpeg)
 
-Clone the repository:
+### Insights Page
 
-```bash
-git clone https://github.com/YOUR_USERNAME/quartly.git
-```
-
-Go into the project folder:
-
-```bash
-cd quartly
-```
-
-Install dependencies:
-
-```bash
-npm install
-```
-
-Start the development server:
-
-```bash
-npm run dev
-```
+![Insights Page](screenshots/quartly_insights_page_dark.png)
 
 ---
 
-# 🎯 Goals
+# 🎯 Project Goals
 
-Quartly was designed to explore:
-- modern UI/UX principles
-- frontend architecture
-- analytics visualization
-- polished interaction design
-- minimalist product aesthetics
+Quartly was created to explore:
+
+* Modern Product Design
+* Frontend Engineering
+* Financial Analytics
+* Cloud-Based Architecture
+* Authentication Systems
+* Responsive User Experiences
+
+---
+
+# 🔮 Planned Features
+
+* Dedicated Charts Page
+* Budget Goals System
+* Category Budgets
+* Spending Alerts
+* Enhanced Analytics
+* Settings Page
+* Additional Cloud Features
+
+---
+
+# 👨‍💻 Creator
+
+Kenny Richardson Kodipally
+
+Built as a portfolio project focused on modern frontend engineering, product design, analytics, and cloud-based application architecture.
 
 ---
 
 # 📜 License
 
-MIT License © 2026 Kenny Richardson Kodipally
+Quartly Personal Use License
+
+Personal, educational, portfolio, and learning use permitted.
+
+Commercial use, resale, sublicensing, SaaS offerings, redistribution for profit, and commercial derivatives are prohibited without written permission from Kenny Richardson Kodipally.
