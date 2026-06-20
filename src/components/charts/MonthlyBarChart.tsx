@@ -117,7 +117,7 @@ const QUARTLY_COLORS = [
             <Tooltip
               contentStyle={{
                 background:
-                  "#111111",
+                  "#ffffff",
                 border:
                   "1px solid #2D2D2D",
                 borderRadius:
@@ -135,7 +135,7 @@ const QUARTLY_COLORS = [
                 0,
                 0,
               ]}
-              fill="#DC143C"
+              fill="#6bd8f7"
             />
 
           </BarChart>
