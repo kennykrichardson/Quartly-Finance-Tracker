@@ -98,6 +98,10 @@ Quartly follows a scalable component-based architecture designed for maintainabi
 
 # 📸 Screenshots
 
+## Login Page
+
+![Dashboard](screenshots/quartly_login_page.jpeg)
+
 ## Light Mode
 
 ### Dashboard
