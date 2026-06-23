@@ -9,8 +9,8 @@ import TransactionForm from "../components/transactions/TransactionForm";
 import TransactionList from "../components/transactions/TransactionList";
 import MonthlyBarChart from "../components/charts/MonthlyBarChart";
 import WeeklyActivity from "../components/charts/WeeklyActivity";
-import HoverCard from "../components/HoverCard";
-import AnimatedButton from "../components/AnimatedButton";
+import HoverCard from "../components/ui/HoverCard";
+import AnimatedButton from "../components/ui/AnimatedButton";
 import TransactionModal from "../components/transactions/TransactionModal";
 
 import {

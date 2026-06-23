@@ -1,9 +1,5 @@
 import { LogIn } from "lucide-react";
-
-import {
-  loginWithGoogle,
-} from "../firebase/auth";
-
+import { loginWithGoogle } from "../firebase/auth";
 import backgroundImage from "../assets/quartly-bg.png";
 
 export default function Login() {
