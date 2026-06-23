@@ -123,7 +123,7 @@ const QUARTLY_COLORS = [
                 borderRadius:
                   "16px",
                 color:
-                  "#ffffff",
+                  "#000000",
               }}
             />
 

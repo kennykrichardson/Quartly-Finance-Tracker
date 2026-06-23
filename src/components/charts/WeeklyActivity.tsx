@@ -102,7 +102,7 @@ export default function WeeklyActivity() {
     background: "#ffffff",
     border: "1px solid #2D2D2D",
     borderRadius: "16px",
-    color: "#0bcbf7",
+    color: "#000000",
   }}
 />
 
