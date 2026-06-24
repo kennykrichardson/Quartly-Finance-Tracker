@@ -107,8 +107,6 @@ export default function SpendingSankey() {
         >
 
           <Sankey
-            fill="#ffffff"
-            stroke="#ffffff"
             data={{
               nodes,
               links,
