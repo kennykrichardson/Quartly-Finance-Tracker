@@ -377,8 +377,6 @@ const Card = ({
 
         </p>
 
-<Card>
-
           <div
             className="
               flex
@@ -627,8 +625,6 @@ const Card = ({
             </div>
 
           </div>
-
-        </Card>
 
         <div
           className="
