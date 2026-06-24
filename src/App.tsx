@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import InsightsPage from "./pages/InsightsPage";
+import BudgetGoals from "./pages/BudgetGoals";
+import ChartsPage from "./pages/ChartsPage";
 
 import Sidebar from "./components/ui/Sidebar";
 
@@ -73,17 +75,37 @@ function AppContent() {
         />
       )}
 
-      {activePage ===
-        "insights-page" && (
-        <InsightsPage
-          isDarkMode={isDarkMode}
-          toggleDarkMode={() =>
-            setIsDarkMode(
-              !isDarkMode
-            )
-          }
-        />
-      )}
+{activePage ===
+  "insights-page" && (
+
+  <InsightsPage
+    isDarkMode={isDarkMode}
+    toggleDarkMode={() =>
+      setIsDarkMode(
+        !isDarkMode
+      )
+    }
+  />
+
+)}
+
+{activePage ===
+  "budgets" && (
+
+  <BudgetGoals
+    isDarkMode={
+      isDarkMode
+    }
+  />
+
+)}
+
+{activePage === "charts-page" && (
+  <ChartsPage
+    isDarkMode={isDarkMode}
+  />
+)}
+      
     </FinanceProvider>
   );
 }

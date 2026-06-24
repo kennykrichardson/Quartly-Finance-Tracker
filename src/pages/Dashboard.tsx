@@ -152,6 +152,33 @@ export default function Dashboard({
       42
     );
 
+doc.setFontSize(18);
+
+doc.text(
+  "Financial Overview",
+  20,
+  70
+);
+
+doc.setFontSize(12);
+
+doc.text(
+  `Transactions: ${
+    transactions.length
+  }`,
+  20,
+  82
+);
+
+doc.text(
+  `Generated: ${
+    new Date()
+      .toLocaleDateString()
+  }`,
+  20,
+  102
+);
+
     doc.setFontSize(14);
 
     doc.text(
@@ -160,7 +187,7 @@ export default function Dashboard({
       52
     );
 
-    let y = 72;
+    let y = 120;
 
     filteredTransactions.forEach(
       (t, index) => {
@@ -618,6 +645,11 @@ export default function Dashboard({
               onOpenModal={() =>
                 setTransactionModalOpen(true)
               }
+             onEditTransaction={() =>
+             setTransactionModalOpen(
+             true
+             )
+             }
             />
 
             <TransactionForm />

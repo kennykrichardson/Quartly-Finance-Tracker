@@ -4,6 +4,17 @@ import {
   useFinance,
 } from "../../context/FinanceContext";
 
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
+
+import {
+  ChevronDown,
+} from "lucide-react";
+
 const categories = [
   "Food",
   "Clothing",
@@ -190,54 +201,132 @@ customCategory:
           "
         />
 
-        <select
-          value={category}
+<Listbox
+  value={category}
+  onChange={setCategory}
+>
 
-          onChange={(e) =>
-            setCategory(
-              e.target.value
-            )
-          }
+  <div className="relative">
 
-          className="
-            w-full h-12 px-4
+<ListboxButton
+  className="
+    w-full
+    h-12
 
-            rounded-2xl
+    px-4
 
-            bg-white/10
+    rounded-2xl
 
-            dark:bg-[#16181d]
+    bg-white/10
 
-            outline-none
+    dark:bg-[#16181d]
 
-            appearance-none
+    text-black
 
-            text-black
+    dark:text-white
 
-            dark:text-white
-          "
-        >
+    flex
+    items-center
+    justify-between
 
-          {categories.map((cat) => (
+    transition-all
+    duration-200
 
-            <option
-              key={cat}
-              value={cat}
+    hover:bg-white/15
+  "
+>
 
-              className="
-                bg-white
-                text-black
+      <span>
+        {category}
+      </span>
 
-                dark:bg-[#16181d]
-                dark:text-white
-              "
-            >
-              {cat}
-            </option>
+      <ChevronDown
+        size={18}
+        className="
+          opacity-70
+        "
+      />
 
-          ))}
+    </ListboxButton>
 
-        </select>
+<ListboxOptions
+  anchor="bottom"
+  className="
+    z-[99999]
+
+    mt-2
+
+    w-[var(--button-width)]
+
+    rounded-2xl
+
+    overflow-hidden
+
+    shadow-2xl
+
+    p-1
+
+    bg-white
+
+    dark:bg-[#16181d]
+
+    border
+
+    border-slate-200
+
+    dark:border-white/10
+  "
+>
+      {categories.map(
+        (cat) => (
+
+          <ListboxOption
+
+            key={cat}
+
+            value={cat}
+
+className={({ focus }) => `
+  px-4
+  py-3
+
+  rounded-xl
+
+  cursor-pointer
+
+  transition-all
+
+  ${
+    focus
+
+      ? `
+          bg-blue-50
+          dark:bg-blue-500/20
+
+          text-blue-700
+          dark:text-white
+        `
+
+      : `
+          text-slate-800
+          dark:text-white
+        `
+  }
+`}
+          >
+
+            {cat}
+
+          </ListboxOption>
+
+        )
+      )}
+
+    </ListboxOptions>
+
+  </div>
+
+</Listbox>
 
         {category === "Other" && (
 

@@ -534,40 +534,76 @@ export default function InsightsPage(
                 font-bold
               "
             >
-              Summary
+              AI Insights
             </h2>
           </div>
 
-          <p
-            className="
-              text-lg
-              leading-relaxed
-              text-[#8ea0b5]
-            "
-          >
-            You made{" "}
-            <strong>
-              {
-                insights.transactionCount
-              }
-            </strong>{" "}
-            transactions this month and
-            spent{" "}
-            <strong>
-              ₹
-              {Math.round(
-                insights.totalSpent
-              )}
-            </strong>
-            . Your highest spending
-            category was{" "}
-            <strong>
-              {
-                insights.topCategory?.[0]
-              }
-            </strong>
-            .
-          </p>
+<ul
+  className="
+    space-y-4
+    text-lg
+    text-[#8ea0b5]
+  "
+>
+
+  <li>
+    • You made
+    {" "}
+    <strong>
+      {
+        insights.transactionCount
+      }
+    </strong>
+    {" "}
+    transactions this month.
+  </li>
+
+  <li>
+    • Your largest spending category was
+    {" "}
+    <strong>
+      {
+        insights.topCategory?.[0]
+      }
+    </strong>.
+  </li>
+
+  <li>
+    • Average transaction size is
+    {" "}
+    <strong>
+      ₹{
+        Math.round(
+          insights.averageExpense
+        )
+      }
+    </strong>.
+  </li>
+
+  <li>
+    • Monthly spending changed by
+    {" "}
+    <strong>
+      {
+        insights.percentageChange.toFixed(
+          1
+        )
+      }
+      %
+    </strong>.
+  </li>
+
+  <li>
+    • Largest expense:
+    {" "}
+    <strong>
+      {
+        insights.highestExpense?.title
+      }
+    </strong>.
+  </li>
+
+</ul>
         </div>
       </div>
     </div>

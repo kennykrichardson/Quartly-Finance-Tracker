@@ -204,11 +204,19 @@ select {
     inherit;
 
   border:
-    1px solid rgba(255,255,255,0.08);
+    none;
 
   -webkit-appearance: none;
 
   appearance: none;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+
+  border:
+    1px solid rgba(255,255,255,0.08);
 }
 
 input::placeholder,

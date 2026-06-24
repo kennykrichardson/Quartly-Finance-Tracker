@@ -110,20 +110,20 @@ export default function WeeklyActivity() {
   type="monotone"
   dataKey="amount"
 
-  stroke="#7bc9d8"
+  stroke="#3B82F6"
 
   strokeWidth={4}
 
   dot={{
     r: 5,
-    fill: "#7bc9d8",
+    fill: "#3B82F6",
     stroke: "#ffffff",
     strokeWidth: 2,
   }}
 
   activeDot={{
     r: 8,
-    fill: "#9cccf0",
+    fill: "#60A5FA",
     stroke: "#ffffff",
     strokeWidth: 2,
   }}

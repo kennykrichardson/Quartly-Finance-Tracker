@@ -35,14 +35,14 @@ export default function MonthlyBarChart() {
   });
 
 const QUARTLY_COLORS = [
-  "#67D6E8", // Soft Turquoise
-  "#5F86D9", // Muted Royal Blue
-  "#4FA88B", // Soft Emerald
-  "#8BC5FF", // Mist Blue
-  "#6FC9C2", // Aqua Teal
-  "#7898E8", // Pastel Indigo
-  "#72C7A1", // Sage Green
-  "#A8D8FF", // Ice Blue
+  "#38BDF8", // Sky Blue
+  "#60A5FA", // Blue
+  "#3B82F6", // Bright Blue
+  "#2563EB", // Royal Blue
+  "#1D4ED8", // Deep Blue
+  "#93C5FD", // Soft Blue
+  "#0EA5E9", // Cyan Blue
+  "#7DD3FC", // Ice Blue
 ];
 
 

@@ -10,6 +10,8 @@ import {
 
   deleteDoc,
 
+  updateDoc,
+
 } from "firebase/firestore";
 
 import { db }
@@ -42,6 +44,35 @@ loadTransactions(
       id: doc.id,
     })
   ) as Transaction[];
+}
+
+export async function
+updateFirestoreTransaction(
+
+  userId: string,
+
+  transaction: Transaction
+) {
+
+  const ref = doc(
+
+    db,
+
+    "users",
+
+    userId,
+
+    "transactions",
+
+    transaction.id
+  );
+
+  await updateDoc(
+    ref,
+    {
+      ...transaction,
+    }
+  );
 }
 
 export async function

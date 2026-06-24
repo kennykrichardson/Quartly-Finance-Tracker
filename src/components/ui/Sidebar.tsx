@@ -3,7 +3,6 @@ import {
   Receipt,
   PieChart,
   Target,
-  Menu,
 } from "lucide-react";
 
 import {
@@ -41,7 +40,7 @@ const dashboardItems = [
 
   {
     icon: PieChart,
-    label: "Charts",
+    label: "Analytics",
     id: "insights",
   },
 ];
@@ -62,32 +61,81 @@ export default function Sidebar({
           setOpen(!open)
         }
 
-        className="
-          fixed
-          top-6
-          left-6
+className="
+fixed
 
-          z-50
+top-4
+left-4
 
-          glass
+z-[60]
 
-          w-12
-          h-12
+w-14
+h-14
 
-          rounded-2xl
+bg-white/90
 
-          flex
-          items-center
-          justify-center
+backdrop-blur-xl
 
-          hover:scale-105
+shadow-[0_10px_40px_rgba(0,0,0,0.12)]
 
-          transition-all
-          duration-150
-        "
-      >
+rounded-2xl
 
-        <Menu size={20} />
+flex
+items-center
+justify-center
+
+transition-all
+duration-200
+
+hover:scale-105
+"
+        >
+<motion.div
+  animate={{
+    rotate: open ? 90 : 0,
+  }}
+  transition={{
+    duration: 0.2,
+  }}
+  className="
+    flex
+    flex-col
+    gap-[5px]
+  "
+>
+
+  <motion.div
+    animate={{
+      width: open ? 20 : 28,
+    }}
+    className="
+      h-[3px]
+      bg-[#292323]
+      rounded-full
+    "
+  />
+
+  <motion.div
+    className="
+      w-7
+      h-[3px]
+      bg-[#292323]
+      rounded-full
+    "
+  />
+
+  <motion.div
+    animate={{
+      width: open ? 28 : 20,
+    }}
+    className="
+      h-[3px]
+      bg-[#292323]
+      rounded-full
+    "
+  />
+
+</motion.div>
 
       </button>
 
@@ -388,6 +436,58 @@ export default function Sidebar({
                     </span>
 
                   </button>
+
+                  <button
+
+  onClick={() => {
+
+    setActivePage(
+      "charts-page"
+    );
+
+    setOpen(false);
+  }}
+
+  className={`
+    flex
+    items-center
+
+    gap-4
+
+    w-full
+    h-14
+
+    px-4
+
+    rounded-2xl
+
+    transition-all
+    duration-150
+
+    ${
+      activePage ===
+      "charts-page"
+
+        ? "bg-white/10"
+
+        : "hover:bg-white/10"
+    }
+  `}
+>
+
+  <PieChart size={20} />
+
+  <span
+    className="
+      font-medium
+    "
+  >
+
+    Charts
+
+  </span>
+
+</button>
 
                   <button
 

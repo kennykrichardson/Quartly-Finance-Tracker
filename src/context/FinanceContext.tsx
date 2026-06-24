@@ -17,6 +17,7 @@ import {
   loadTransactions,
   saveTransaction,
   removeTransaction,
+  updateFirestoreTransaction,
 } from "../firebase/firestore";
 
 export interface Transaction {
@@ -35,6 +36,10 @@ interface FinanceContextType {
 
   addTransaction: (
     transaction: Omit<Transaction, "id">
+  ) => Promise<void>;
+
+  updateTransaction: (
+    transaction: Transaction
   ) => Promise<void>;
 
   deleteTransaction: (
@@ -166,6 +171,56 @@ export function FinanceProvider({
     }
   }
 
+async function updateTransaction(
+  updatedTransaction: Transaction
+) {
+
+  const updatedTransactions =
+
+    transactions.map(
+      (transaction) =>
+
+        transaction.id ===
+        updatedTransaction.id
+
+          ? updatedTransaction
+
+          : transaction
+    );
+
+  setTransactions(
+    updatedTransactions
+  );
+
+  localStorage.setItem(
+
+    "quartly-transactions",
+
+    JSON.stringify(
+      updatedTransactions
+    )
+  );
+
+  if (!user) return;
+
+  try {
+
+    await updateFirestoreTransaction(
+
+      user.uid,
+
+      updatedTransaction
+    );
+
+  } catch (error) {
+
+    console.error(
+      "Failed updating transaction",
+      error
+    );
+  }
+}
+
   async function deleteTransaction(
     id: string
   ) {
@@ -211,6 +266,8 @@ export function FinanceProvider({
         addTransaction,
 
         deleteTransaction,
+
+        updateTransaction,
       }}
     >
 

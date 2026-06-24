@@ -1,5 +1,6 @@
 import {
   Trash2,
+  Pencil,
 } from "lucide-react";
 
 import {
@@ -21,16 +22,19 @@ import {
 
 interface Props {
   transactions: Transaction[];
-
   darkMode: boolean;
-
   onOpenModal: () => void;
+
+  onEditTransaction?: (
+    transaction: Transaction
+  ) => void;
 }
 
 export default function TransactionList({
   transactions,
   darkMode,
   onOpenModal,
+  onEditTransaction,
 }: Props) {
 
   const {
@@ -154,15 +158,17 @@ export default function TransactionList({
                   duration: 0.2,
                 }}
 
-                className={`
-                  rounded-3xl
+className={`
+  rounded-3xl
 
-                  p-5
+  p-5
 
-                  flex items-center
-                  justify-between
+  flex
+  items-center
 
-                  gap-6
+  justify-between
+
+  gap-4
 
                   shadow-sm
 
@@ -178,6 +184,7 @@ export default function TransactionList({
 
                 <div className="
                   flex-1
+                  min-w-0
                 ">
 
                   <div className="
@@ -188,6 +195,10 @@ export default function TransactionList({
                     <h3 className="
                       font-semibold
                       text-lg
+
+                      leading-tight
+
+                      min-w-0
                     ">
                       {transaction.title}
                     </h3>
@@ -274,52 +285,114 @@ export default function TransactionList({
 
                 </div>
 
-                <div className="
-                  flex items-center
-                  gap-4
-                ">
+<div
+  className="
+    flex
+    flex-col
 
-                  <span className="
-                    text-xl
-                    font-semibold
+    items-end
 
-                    whitespace-nowrap
-                  ">
-                    ₹{transaction.amount}
-                  </span>
+    justify-center
 
-                  <button
-                    onClick={() =>
-                      deleteTransaction(
-                        transaction.id
-                      )
-                    }
+    gap-2
 
-                    className="
-                      w-10 h-10
+    shrink-0
 
-                      rounded-2xl
+    ml-auto
+  "
+>
 
-                      flex items-center
-                      justify-center
+  <span
+    className="
+      text-xl
+      font-semibold
 
-                      hover:bg-red-50
+      whitespace-nowrap
+    "
+  >
+    ₹{transaction.amount}
+  </span>
 
-                      transition-all
-                      duration-200
-                    "
-                  >
+  <div
+    className="
+      flex
+      items-center
 
-                    <Trash2
-                      size={18}
-                      className="
-                        text-red-600
-                      "
-                    />
+      gap-2
+    "
+  >
 
-                  </button>
+    <button
 
-                </div>
+      onClick={() =>
+        onEditTransaction?.(
+          transaction
+        )
+      }
+
+      className="
+        w-10
+        h-10
+
+        rounded-2xl
+
+        flex
+        items-center
+        justify-center
+
+        transition-all
+        duration-200
+
+        hover:bg-blue-50
+      "
+    >
+
+      <Pencil
+        size={18}
+        className="
+          text-blue-600
+        "
+      />
+
+    </button>
+
+    <button
+
+      onClick={() =>
+        deleteTransaction(
+          transaction.id
+        )
+      }
+
+      className="
+        w-10
+        h-10
+
+        rounded-2xl
+
+        flex
+        items-center
+        justify-center
+
+        transition-all
+        duration-200
+
+        hover:bg-red-50
+      "
+    >
+
+      <Trash2
+        size={18}
+        className="
+          text-red-600
+        "
+      />
+
+    </button>
+
+  </div>
+
+</div>
 
               </motion.div>
 

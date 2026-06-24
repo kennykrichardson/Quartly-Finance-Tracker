@@ -88,6 +88,18 @@ export default function SearchBar({
 
             outline-none
 
+            ring-0
+            
+            focus:ring-0
+
+            focus:outline-none
+
+            focus:border-transparent
+
+            shadow-none
+
+            appearance-none
+
             text-inherit
           "
         />
