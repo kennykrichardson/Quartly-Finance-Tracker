@@ -117,7 +117,14 @@ export default function SpendingSankey() {
             }}
           >
 
-            <Tooltip />
+<Tooltip
+  contentStyle={{
+    background: "#ffffff",
+    border: "1px solid #2D2D2D",
+    borderRadius: "16px",
+    color: "#ffffff",
+  }}
+/>
 
           </Sankey>
 
