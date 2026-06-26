@@ -100,19 +100,24 @@ const QUARTLY_COLORS = [
           >
 
             <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="#e5e7eb"
-              opacity={0.5}
+              stroke="#0091ffed"
+              strokeDasharray="4 4"
+              opacity={0.08}
+              vertical={false}
             />
 
-            <XAxis
-              dataKey="category"
-              stroke="#9ca3af"
-            />
+<XAxis
+  dataKey="category"
+  stroke="#3eabffed"
+  tickLine={false}
+  axisLine={false}
+/>
 
-            <YAxis
-              stroke="#9ca3af"
-            />
+<YAxis
+  stroke="#3eabffed"
+  tickLine={false}
+  axisLine={false}
+/>
 
             <Tooltip
               contentStyle={{

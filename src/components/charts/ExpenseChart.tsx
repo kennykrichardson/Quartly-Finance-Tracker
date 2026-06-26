@@ -11,14 +11,14 @@ import {
 } from "../../context/FinanceContext";
 
 const COLORS = [
-  "#38BDF8", // Sky Blue
-  "#60A5FA", // Blue
-  "#3B82F6", // Bright Blue
-  "#2563EB", // Royal Blue
-  "#1D4ED8", // Deep Blue
-  "#93C5FD", // Soft Blue
-  "#0EA5E9", // Cyan Blue
-  "#7DD3FC", // Ice Blue
+  "#38BDF8",
+  "#60A5FA",
+  "#3B82F6",
+  "#2563EB",
+  "#1D4ED8",
+  "#93C5FD",
+  "#0EA5E9",
+  "#7DD3FC",
 ];
 
 export default function ExpenseChart() {
@@ -38,6 +38,7 @@ export default function ExpenseChart() {
     }
 
     categoryMap[t.category] += t.amount;
+
   });
 
   const data =
@@ -53,30 +54,40 @@ export default function ExpenseChart() {
     <div
       id="insights"
       className="
-        glass rounded-[32px]
+        glass
+        rounded-[32px]
         p-6
       "
     >
 
       <div>
 
-        <h2 className="
-          text-2xl font-semibold
-        ">
+        <h2
+          className="
+            text-2xl
+            font-semibold
+          "
+        >
           Spending Insights
         </h2>
 
-        <p className="
-          text-gray-500 mt-1
-        ">
+        <p
+          className="
+            text-gray-500
+            mt-1
+          "
+        >
           Category distribution
         </p>
 
       </div>
 
-      <div className="
-        h-[250px] mt-6
-      ">
+      <div
+        className="
+          h-[250px]
+          mt-6
+        "
+      >
 
         <ResponsiveContainer
           width="100%"
@@ -93,6 +104,11 @@ export default function ExpenseChart() {
               outerRadius={95}
 
               paddingAngle={4}
+
+              stroke="none"
+              strokeWidth={0}
+
+              isAnimationActive
             >
 
               {data.map((_, index) => (
@@ -105,20 +121,34 @@ export default function ExpenseChart() {
                       COLORS.length
                     ]
                   }
+                  stroke="none"
+                  strokeWidth={0}
                 />
 
               ))}
 
             </Pie>
 
-<Tooltip
-  contentStyle={{
-    background: "#ffffff",
-    border: "1px solid #2D2D2D",
-    borderRadius: "16px",
-    color: "#ffffff",
-  }}
-/>
+            <Tooltip
+              contentStyle={{
+                background: "#ffffff",
+                border: "1px solid #E5E7EB",
+                borderRadius: "16px",
+                color: "#111827",
+                boxShadow:
+                  "0 12px 40px rgba(0,0,0,0.12)",
+              }}
+              itemStyle={{
+                color: "#111827",
+              }}
+              labelStyle={{
+                color: "#111827",
+                fontWeight: 600,
+              }}
+              cursor={{
+                fill: "rgba(56,189,248,0.08)",
+              }}
+            />
 
           </PieChart>
 

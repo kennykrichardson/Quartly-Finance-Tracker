@@ -84,18 +84,24 @@ export default function WeeklyActivity() {
           <LineChart data={data}>
 
             <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="#e5e7eb"
+              stroke="#0091ffed"
+              strokeDasharray="4 4"
+              opacity={0.08}
+              vertical={false}
             />
 
-            <XAxis
-              dataKey="date"
-              stroke="#9ca3af"
-            />
+<XAxis
+  dataKey="date"
+  stroke="#3eabffed"
+  tickLine={false}
+  axisLine={false}
+/>
 
-            <YAxis
-              stroke="#9ca3af"
-            />
+<YAxis
+  stroke="#3eabffed"
+  tickLine={false}
+  axisLine={false}
+/>
 
 <Tooltip
   contentStyle={{
