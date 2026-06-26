@@ -62,6 +62,7 @@ function AppContent() {
         setOpen={setSidebarOpen}
         activePage={activePage}
         setActivePage={setActivePage}
+        isDarkMode={isDarkMode}
       />
 
       {activePage === "dashboard" && (

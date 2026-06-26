@@ -22,6 +22,8 @@ interface Props {
   setActivePage: (
     page: string
   ) => void;
+
+  isDarkMode: boolean;
 }
 
 const dashboardItems = [
@@ -50,94 +52,146 @@ export default function Sidebar({
   setOpen,
   activePage,
   setActivePage,
+  isDarkMode,
 }: Props) {
 
   return (
 
     <>
 
-      <button
-        onClick={() =>
-          setOpen(!open)
-        }
+<button
+  onClick={() =>
+    setOpen(!open)
+  }
 
-className="
-fixed
+  className={`
+    fixed
 
-top-4
-left-4
+    top-4
+    left-4
 
-z-[60]
+    z-[60]
 
-w-14
-h-14
+    w-14
+    h-14
 
-bg-white/90
+    rounded-2xl
 
-backdrop-blur-xl
+    backdrop-blur-xl
 
-shadow-[0_10px_40px_rgba(0,0,0,0.12)]
-
-rounded-2xl
-
-flex
-items-center
-justify-center
-
-transition-all
-duration-200
-
-hover:scale-105
-"
-        >
-<motion.div
-  animate={{
-    rotate: open ? 90 : 0,
-  }}
-  transition={{
-    duration: 0.2,
-  }}
-  className="
     flex
-    flex-col
-    gap-[5px]
-  "
+    items-center
+    justify-center
+
+    transition-all
+    duration-300
+
+    hover:scale-105
+
+    ${
+      isDarkMode
+
+        ? `
+          bg-[#171b22]/90
+
+          border
+          border-white/10
+
+          shadow-[0_10px_35px_rgba(0,0,0,0.45)]
+        `
+
+        : `
+          bg-white/90
+
+          border
+          border-slate-200
+
+          shadow-[0_10px_35px_rgba(0,0,0,0.12)]
+        `
+    }
+  `}
 >
 
   <motion.div
+
     animate={{
-      width: open ? 20 : 28,
+      rotate: open ? 90 : 0,
     }}
-    className="
-      h-[3px]
-      bg-[#292323]
-      rounded-full
-    "
-  />
 
-  <motion.div
-    className="
-      w-7
-      h-[3px]
-      bg-[#292323]
-      rounded-full
-    "
-  />
-
-  <motion.div
-    animate={{
-      width: open ? 28 : 20,
+    transition={{
+      duration: 0.25,
     }}
+
     className="
-      h-[3px]
-      bg-[#292323]
-      rounded-full
+      flex
+      flex-col
+      gap-[5px]
     "
-  />
+  >
 
-</motion.div>
+    <motion.div
 
-      </button>
+      animate={{
+        width: open ? 20 : 28,
+      }}
+
+      className={`
+        h-[3px]
+
+        rounded-full
+
+        ${
+          isDarkMode
+
+            ? "bg-white"
+
+            : "bg-[#20242b]"
+        }
+      `}
+    />
+
+    <motion.div
+
+      className={`
+        w-7
+        h-[3px]
+
+        rounded-full
+
+        ${
+          isDarkMode
+
+            ? "bg-white"
+
+            : "bg-[#20242b]"
+        }
+      `}
+    />
+
+    <motion.div
+
+      animate={{
+        width: open ? 28 : 20,
+      }}
+
+      className={`
+        h-[3px]
+
+        rounded-full
+
+        ${
+          isDarkMode
+
+            ? "bg-white"
+
+            : "bg-[#20242b]"
+        }
+      `}
+    />
+
+  </motion.div>
+
+</button>
 
       <AnimatePresence>
 
