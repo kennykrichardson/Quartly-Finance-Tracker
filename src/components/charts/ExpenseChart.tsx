@@ -11,14 +11,14 @@ import {
 } from "../../context/FinanceContext";
 
 const COLORS = [
-  "#38BDF8",
-  "#60A5FA",
-  "#3B82F6",
-  "#2563EB",
-  "#1D4ED8",
-  "#93C5FD",
   "#0EA5E9",
+  "#2563EB",
+  "#3B82F6",
+  "#1D4ED8",
+  "#38BDF8",
   "#7DD3FC",
+  "#60A5FA",
+  "#93C5FD",
 ];
 
 export default function ExpenseChart() {

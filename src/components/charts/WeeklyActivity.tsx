@@ -92,13 +92,13 @@ export default function WeeklyActivity() {
 
 <XAxis
   dataKey="date"
-  stroke="#3eabffed"
+  stroke="#0091ffed"
   tickLine={false}
   axisLine={false}
 />
 
 <YAxis
-  stroke="#3eabffed"
+  stroke="#0091ffed"
   tickLine={false}
   axisLine={false}
 />
@@ -129,7 +129,7 @@ export default function WeeklyActivity() {
 
   activeDot={{
     r: 8,
-    fill: "#60A5FA",
+    fill: "#3eabffed",
     stroke: "#ffffff",
     strokeWidth: 2,
   }}

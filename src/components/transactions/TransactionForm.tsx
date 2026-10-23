@@ -97,7 +97,7 @@ customCategory:
   return (
 
     <div className="
-      glass rounded-[32px]
+      glass-premium rounded-[30px]
       p-6
 
       h-full
@@ -143,7 +143,7 @@ customCategory:
 
             rounded-2xl
 
-            bg-white/10
+            bg-white/35 border border-white/45 backdrop-blur-xl dark:bg-white/[0.055] dark:border-white/[0.08]
 
             outline-none
           "
@@ -167,7 +167,7 @@ customCategory:
 
             rounded-2xl
 
-            bg-white/10
+            bg-white/35 border border-white/45 backdrop-blur-xl dark:bg-white/[0.055] dark:border-white/[0.08]
 
             outline-none
           "
@@ -189,7 +189,7 @@ customCategory:
 
             rounded-2xl
 
-            bg-white/10
+            bg-white/35 border border-white/45 backdrop-blur-xl dark:bg-white/[0.055] dark:border-white/[0.08]
 
             outline-none
 
@@ -217,9 +217,9 @@ customCategory:
 
     rounded-2xl
 
-    bg-white/10
+    bg-white/35 border border-white/45 backdrop-blur-xl dark:bg-white/[0.055] dark:border-white/[0.08]
 
-    dark:bg-[#16181d]
+    dark:bg-white/[0.06]
 
     text-black
 
@@ -268,7 +268,7 @@ customCategory:
 
     bg-white
 
-    dark:bg-[#16181d]
+    dark:bg-white/[0.06]
 
     border
 
@@ -346,7 +346,7 @@ className={({ focus }) => `
 
               rounded-2xl
 
-              bg-white/10
+              bg-white/35 border border-white/45 backdrop-blur-xl dark:bg-white/[0.055] dark:border-white/[0.08]
 
               outline-none
             "
@@ -370,7 +370,7 @@ className={({ focus }) => `
 
             rounded-2xl
 
-            bg-white/10
+            bg-white/35 border border-white/45 backdrop-blur-xl dark:bg-white/[0.055] dark:border-white/[0.08]
 
             outline-none
           "

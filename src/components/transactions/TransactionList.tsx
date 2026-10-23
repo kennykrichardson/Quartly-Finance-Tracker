@@ -172,13 +172,9 @@ className={`
 
                   shadow-sm
 
-                  ${
-                    darkMode
-
-                      ? "bg-[#1b1f27]"
-
-                      : "bg-[#ffffff]"
-                  }
+                  glass-inner ${
+                    darkMode ? "bg-white/[0.035]" : "bg-white/55"
+                  } border border-white/35 dark:border-white/[0.07] backdrop-blur-xl
                 `}
               >
 

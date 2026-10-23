@@ -1,14 +1,9 @@
-import { useState } from "react";
-
-import { jsPDF } from "jspdf";
+import { lazy, Suspense, useState } from "react";
 
 import SearchBar from "../components/ui/SearchBar";
 import StatCard from "../components/ui/StatCard";
-import ExpenseChart from "../components/charts/ExpenseChart";
 import TransactionForm from "../components/transactions/TransactionForm";
 import TransactionList from "../components/transactions/TransactionList";
-import MonthlyBarChart from "../components/charts/MonthlyBarChart";
-import WeeklyActivity from "../components/charts/WeeklyActivity";
 import HoverCard from "../components/ui/HoverCard";
 import AnimatedButton from "../components/ui/AnimatedButton";
 import TransactionModal from "../components/transactions/TransactionModal";
@@ -30,21 +25,33 @@ import {
   useUser,
 } from "../firebase/UserContext";
 
+
+const ExpenseChart = lazy(() => import("../components/charts/ExpenseChart"));
+const MonthlyBarChart = lazy(() => import("../components/charts/MonthlyBarChart"));
+const WeeklyActivity = lazy(() => import("../components/charts/WeeklyActivity"));
+
+function ChartFallback() {
+  return <div className="glass-premium min-h-48 rounded-2xl p-6 animate-pulse" aria-label="Loading chart" />;
+}
+
 interface DashboardProps {
 
   isDarkMode: boolean;
 
   toggleDarkMode: () => void;
+  activePage: string;
+  setActivePage: (page: string) => void;
 }
 
 export default function Dashboard({
   isDarkMode,
   toggleDarkMode,
+  activePage,
+  setActivePage,
 }: DashboardProps){
 
-  const [profileOpen,
-    setProfileOpen] =
-    useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [profilePhotoFailed, setProfilePhotoFailed] = useState(false);
 
   const user =
     useUser();
@@ -113,8 +120,9 @@ export default function Dashboard({
       );
     });
 
-  function exportPDF() {
-
+  async function exportPDF() {
+    // Keep the sizeable PDF library out of the initial dashboard bundle.
+    const { jsPDF } = await import("jspdf");
     const doc = new jsPDF();
 
     doc.setFont(
@@ -282,22 +290,7 @@ doc.text(
         min-h-screen
         p-6
 
-        transition-colors
-        duration-300
-
-        ${
-          isDarkMode
-
-            ? `
-              bg-[#0f1115]
-              text-white
-            `
-
-            : `
-              bg-[#f8f8f7]
-              text-black
-            `
-        }
+        ${isDarkMode ? "text-white" : "text-black"}
       `}>
 
         <main className="
@@ -306,55 +299,55 @@ doc.text(
           space-y-6
         ">
 
-          <SearchBar
-            selected={selectedFilter}
-            setSelected={setSelectedFilter}
-            search={search}
-            setSearch={setSearch}
-          />
-
           <div
             id="overview"
             className="
+              relative z-50
               pt-3
-
-              flex
-              items-center
-              justify-between
-
-              gap-6
-              flex-wrap
+              flex flex-wrap items-center justify-between gap-6
+              xl:grid xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]
             "
           >
 
-            <div>
+            <div className="xl:col-start-1 xl:row-start-1">
 
               <h1 className="
-                text-5xl
+                text-3xl
                 font-semibold
-                tracking-tight
+                tracking-[-.055em]
+                sm:text-4xl
+                lg:text-[2.7rem]
               ">
 
                 Quartly - By Ken Richardson
 
               </h1>
 
-              <p className="
-                text-[#8ea0b5]
-                mt-2
-              ">
-
+              <p className="mt-2 text-[#8ea0b5]">
                 Know where your money goes
-
               </p>
-
             </div>
+
+            <nav aria-label="Main navigation" className="hidden items-center gap-1 rounded-full border border-white/30 bg-white/10 p-1 backdrop-blur-xl xl:col-start-2 xl:row-start-1 xl:flex xl:justify-self-center dark:border-white/15 dark:bg-slate-950/55 dark:shadow-[0_8px_28px_rgba(0,0,0,0.28)]">
+              {[
+                { label: "Overview", page: "dashboard" },
+                { label: "Charts", page: "charts-page" },
+                { label: "Budget Goals", page: "budgets" },
+              ].map((item) => (
+                <button
+                  key={item.page}
+                  onClick={() => setActivePage(item.page)}
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${activePage === item.page ? "bg-white/80 text-slate-900 shadow-sm dark:bg-cyan-300/15 dark:text-cyan-100 dark:ring-1 dark:ring-inset dark:ring-cyan-200/15" : "text-slate-600 hover:bg-white/50 dark:text-slate-300 dark:hover:bg-white/10"}`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
 
             <div
               className="
-                flex
-                items-center
-                gap-3
+                flex items-center gap-3
+                xl:col-start-3 xl:row-start-1 xl:justify-self-end
               "
             >
 
@@ -407,9 +400,7 @@ doc.text(
               </button>
 
               <div
-                className="
-                  relative
-                "
+                className="relative z-[1000] isolate"
               >
 
                 <button
@@ -441,28 +432,22 @@ doc.text(
                     hover:scale-[1.02]
                   "
                 >
-<img
-
-  src={
-    user?.photoURL ||
-    ""
-  }
-
-  alt="Profile"
-
-  className="
-    w-10
-    h-10
-
-    rounded-full
-
-    border
-    border-white/10
-
-    transition-all
-    duration-200
-  "
-/>
+{user?.photoURL && !profilePhotoFailed ? (
+  <img
+    src={user.photoURL}
+    alt={user.displayName ? `${user.displayName} profile` : "Profile"}
+    referrerPolicy="no-referrer"
+    onError={() => setProfilePhotoFailed(true)}
+    className="h-10 w-10 rounded-full border border-white/10 object-cover"
+  />
+) : (
+  <span
+    aria-label="Profile placeholder"
+    className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-teal-500/15 font-semibold text-teal-700 dark:text-teal-200"
+  >
+    {(user?.displayName || user?.email || "Q").trim().charAt(0).toUpperCase()}
+  </span>
+)}
 
                 </button>
 
@@ -476,6 +461,7 @@ doc.text(
                       top-14
 
                       w-72
+                      z-[1001]
 
                       glass
 
@@ -494,7 +480,7 @@ doc.text(
 
                       border-white/10
 
-                      shadow-[0_0_40px_rgba(64,224,208,0.15)]
+                      shadow-[0_0_40px_rgba(220,20,60,0.15)]
 
                       z-50
                     "
@@ -511,22 +497,19 @@ doc.text(
                       "
                     >
 
-                      <img
-
-                        src={
-                          user?.photoURL ||
-                          ""
-                        }
-
-                        alt=""
-
-                        className="
-                          w-12
-                          h-12
-
-                          rounded-full
-                        "
-                      />
+                      {user?.photoURL && !profilePhotoFailed ? (
+                        <img
+                          src={user.photoURL}
+                          alt=""
+                          referrerPolicy="no-referrer"
+                          onError={() => setProfilePhotoFailed(true)}
+                          className="h-12 w-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-teal-500/15 font-semibold text-teal-700 dark:text-teal-200">
+                          {(user?.displayName || user?.email || "Q").trim().charAt(0).toUpperCase()}
+                        </span>
+                      )}
 
                       <div>
 
@@ -586,9 +569,9 @@ doc.text(
     transition-all
     duration-200
 
-    hover:bg-red-500/10
+    hover:bg-teal-500/10
 
-    hover:text-red-500
+    hover:text-teal-500
 
     hover:translate-x-1
   "
@@ -608,6 +591,13 @@ doc.text(
 
           </div>
 
+          <SearchBar
+            selected={selectedFilter}
+            setSelected={setSelectedFilter}
+            search={search}
+            setSearch={setSearch}
+          />
+
           <div className="
             grid
             grid-cols-1
@@ -615,20 +605,26 @@ doc.text(
             gap-6
           ">
 
-            <StatCard
-              title="Total Expenses"
-              value={`₹${totalExpenses}`}
-            />
+            <div className="transform-gpu transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.015] motion-reduce:transform-none motion-reduce:transition-none">
+              <StatCard
+                title="Total Expenses"
+                value={`₹${totalExpenses}`}
+              />
+            </div>
 
-            <StatCard
-              title="Transactions"
-              value={`${transactions.length}`}
-            />
+            <div className="transform-gpu transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.015] motion-reduce:transform-none motion-reduce:transition-none">
+              <StatCard
+                title="Transactions"
+                value={`${transactions.length}`}
+              />
+            </div>
 
-            <StatCard
-              title="Categories"
-              value="8"
-            />
+            <div className="transform-gpu transition-transform duration-300 ease-out hover:-translate-y-1 hover:scale-[1.015] motion-reduce:transform-none motion-reduce:transition-none">
+              <StatCard
+                title="Categories"
+                value="8"
+              />
+            </div>
 
           </div>
 
@@ -663,17 +659,23 @@ doc.text(
             gap-6
           ">
 
-            <HoverCard>
-              <ExpenseChart />
-            </HoverCard>
+            <Suspense fallback={<ChartFallback />}>
+              <HoverCard>
+                <ExpenseChart />
+              </HoverCard>
+            </Suspense>
 
-            <HoverCard>
-              <MonthlyBarChart />
-            </HoverCard>
+            <Suspense fallback={<ChartFallback />}>
+              <HoverCard>
+                <MonthlyBarChart />
+              </HoverCard>
+            </Suspense>
 
-            <HoverCard>
-              <WeeklyActivity />
-            </HoverCard>
+            <Suspense fallback={<ChartFallback />}>
+              <HoverCard>
+                <WeeklyActivity />
+              </HoverCard>
+            </Suspense>
 
           </div>
 

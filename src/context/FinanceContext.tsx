@@ -1,22 +1,20 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from "react";
+import type { ReactNode } from "react";
 
-import type {
-  ReactNode,
-} from "react";
-
+import { useUser } from "../firebase/UserContext";
 import {
-  useUser,
-} from "../firebase/UserContext";
-
-import {
+  loadBudget,
   loadTransactions,
-  saveTransaction,
   removeTransaction,
+  saveBudget as saveFirestoreBudget,
+  saveTransaction,
   updateFirestoreTransaction,
 } from "../firebase/firestore";
 
@@ -31,267 +29,176 @@ export interface Transaction {
 }
 
 interface FinanceContextType {
-
   transactions: Transaction[];
-
-  addTransaction: (
-    transaction: Omit<Transaction, "id">
-  ) => Promise<void>;
-
-  updateTransaction: (
-    transaction: Transaction
-  ) => Promise<void>;
-
-  deleteTransaction: (
-    id: string
-  ) => Promise<void>;
+  transactionsLoading: boolean;
+  budget: number;
+  budgetLoading: boolean;
+  setBudget: (value: number) => Promise<void>;
+  addTransaction: (transaction: Omit<Transaction, "id">) => Promise<void>;
+  updateTransaction: (transaction: Transaction) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
 }
 
-const FinanceContext =
-  createContext<FinanceContextType | null>(
-    null
-  );
+const FinanceContext = createContext<FinanceContextType | null>(null);
 
-export function FinanceProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+function cacheKey(uid: string, kind: "transactions" | "budget") {
+  return `quartly:${uid}:${kind}`;
+}
 
-  const user =
-    useUser();
+export function FinanceProvider({ children }: { children: ReactNode }) {
+  const user = useUser();
+  const uid = user?.uid ?? null;
 
-  const [transactions,
-    setTransactions] =
-    useState<Transaction[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [transactionsLoading, setTransactionsLoading] = useState(true);
+  const [budget, setBudgetState] = useState(50000);
+  const [budgetLoading, setBudgetLoading] = useState(true);
 
+  // A per-user cache improves perceived startup speed without mixing accounts.
   useEffect(() => {
+    let cancelled = false;
 
-    const saved =
-      localStorage.getItem(
-        "quartly-transactions"
-      );
+    if (!uid) {
+      setTransactions([]);
+      setBudgetState(50000);
+      setTransactionsLoading(false);
+      setBudgetLoading(false);
+      return;
+    }
 
-    if (!saved) return;
+    setTransactionsLoading(true);
+    setBudgetLoading(true);
 
-    setTransactions(
-      JSON.parse(saved)
-    );
+    try {
+      const cachedTransactions = localStorage.getItem(cacheKey(uid, "transactions"));
+      setTransactions(cachedTransactions ? JSON.parse(cachedTransactions) as Transaction[] : []);
+      const cachedBudget = localStorage.getItem(cacheKey(uid, "budget"));
+      setBudgetState(cachedBudget !== null ? Math.max(0, Number(cachedBudget) || 0) : 50000);
+    } catch (error) {
+      console.warn("Quartly cache could not be read; loading from Firebase.", error);
+      setTransactions([]);
+      setBudgetState(50000);
+    }
 
-  }, []);
-
-  useEffect(() => {
-
-    localStorage.setItem(
-
-      "quartly-transactions",
-
-      JSON.stringify(
-        transactions
-      )
-    );
-
-  }, [transactions]);
-
-  useEffect(() => {
-
-    async function
-    fetchTransactions() {
-
-      if (!user) return;
+    void (async () => {
+      try {
+        const remoteTransactions = await loadTransactions(uid);
+        if (!cancelled) {
+          setTransactions(remoteTransactions);
+          localStorage.setItem(cacheKey(uid, "transactions"), JSON.stringify(remoteTransactions));
+        }
+      } catch (error) {
+        console.error("Failed loading transactions from Firebase.", error);
+      } finally {
+        if (!cancelled) setTransactionsLoading(false);
+      }
 
       try {
+        const remoteBudget = await loadBudget(uid);
+        if (cancelled) return;
 
-        const firestoreTransactions =
+        if (remoteBudget !== null) {
+          setBudgetState(remoteBudget);
+          localStorage.setItem(cacheKey(uid, "budget"), String(remoteBudget));
+        } else {
+          // First-run migration: preserve the existing local budget for the first
+          // signed-in account, then save it remotely so future sessions sync.
+          const cached = localStorage.getItem(cacheKey(uid, "budget"));
+          const legacy = localStorage.getItem("quartly-budget");
+          const cachedValue = cached === null ? NaN : Number(cached);
+          const legacyValue = legacy === null ? NaN : Number(legacy);
+          const initialBudget = Number.isFinite(cachedValue) && cachedValue > 0
+            ? cachedValue
+            : Number.isFinite(legacyValue) && legacyValue > 0
+              ? legacyValue
+              : 50000;
 
-          await loadTransactions(
-            user.uid
-          );
+          await saveFirestoreBudget(uid, initialBudget);
+          if (cancelled) return;
 
-        if (
-          firestoreTransactions.length >
-          0
-        ) {
-
-          setTransactions(
-            firestoreTransactions
-          );
+          setBudgetState(initialBudget);
+          localStorage.setItem(cacheKey(uid, "budget"), String(initialBudget));
+          if (legacy !== null) localStorage.removeItem("quartly-budget");
         }
-
       } catch (error) {
-
-        console.error(
-          "Failed loading transactions",
-          error
-        );
+        console.error("Failed loading/syncing budget from Firebase.", error);
+      } finally {
+        if (!cancelled) setBudgetLoading(false);
       }
-    }
+    })();
 
-    fetchTransactions();
-
-  }, [user]);
-
-  async function addTransaction(
-    transaction:
-      Omit<Transaction, "id">
-  ) {
-
-    const newTransaction = {
-
-      ...transaction,
-
-      id:
-        crypto.randomUUID(),
+    return () => {
+      cancelled = true;
     };
+  }, [uid]);
 
-    setTransactions((prev) => [
-
-      newTransaction,
-
-      ...prev,
-    ]);
-
-    if (!user) return;
-
+  useEffect(() => {
+    if (!uid || transactionsLoading) return;
     try {
-
-      await saveTransaction(
-
-        user.uid,
-
-        newTransaction
-      );
-
+      localStorage.setItem(cacheKey(uid, "transactions"), JSON.stringify(transactions));
     } catch (error) {
-
-      console.error(
-        "Failed saving transaction",
-        error
-      );
+      console.warn("Could not cache transactions locally.", error);
     }
-  }
+  }, [uid, transactions, transactionsLoading]);
 
-async function updateTransaction(
-  updatedTransaction: Transaction
-) {
+  const addTransaction = useCallback(async (transaction: Omit<Transaction, "id">) => {
+    if (!uid) throw new Error("Sign in before saving a transaction.");
+    const newTransaction: Transaction = { ...transaction, id: crypto.randomUUID() };
 
-  const updatedTransactions =
+    // Write to Firebase before updating the canonical in-memory list, so errors are visible.
+    await saveTransaction(uid, newTransaction);
+    setTransactions((previous) => [newTransaction, ...previous]);
+  }, [uid]);
 
-    transactions.map(
-      (transaction) =>
+  const updateTransaction = useCallback(async (updated: Transaction) => {
+    if (!uid) throw new Error("Sign in before updating a transaction.");
+    await updateFirestoreTransaction(uid, updated);
+    setTransactions((previous) => previous.map((item) => item.id === updated.id ? updated : item));
+  }, [uid]);
 
-        transaction.id ===
-        updatedTransaction.id
+  const deleteTransaction = useCallback(async (id: string) => {
+    if (!uid) throw new Error("Sign in before deleting a transaction.");
+    await removeTransaction(uid, id);
+    setTransactions((previous) => previous.filter((item) => item.id !== id));
+  }, [uid]);
 
-          ? updatedTransaction
+  const setBudget = useCallback(async (value: number) => {
+    if (!uid) throw new Error("Sign in before saving your budget.");
+    if (!Number.isFinite(value) || value < 0) {
+      throw new Error("Budget must be a valid non-negative amount.");
+    }
 
-          : transaction
-    );
-
-  setTransactions(
-    updatedTransactions
-  );
-
-  localStorage.setItem(
-
-    "quartly-transactions",
-
-    JSON.stringify(
-      updatedTransactions
-    )
-  );
-
-  if (!user) return;
-
-  try {
-
-    await updateFirestoreTransaction(
-
-      user.uid,
-
-      updatedTransaction
-    );
-
-  } catch (error) {
-
-    console.error(
-      "Failed updating transaction",
-      error
-    );
-  }
-}
-
-  async function deleteTransaction(
-    id: string
-  ) {
-
-    setTransactions((prev) =>
-
-      prev.filter(
-
-        (transaction) =>
-
-          transaction.id !== id
-      )
-    );
-
-    if (!user) return;
-
+    // Optimistic update, with rollback if Firebase rejects the write.
+    const previous = budget;
+    setBudgetState(value);
     try {
-
-      await removeTransaction(
-
-        user.uid,
-
-        id
-      );
-
+      await saveFirestoreBudget(uid, value);
+      localStorage.setItem(cacheKey(uid, "budget"), String(value));
     } catch (error) {
-
-      console.error(
-        "Failed deleting transaction",
-        error
-      );
+      setBudgetState(previous);
+      throw error;
     }
-  }
+  }, [uid, budget]);
 
-  return (
+  const value = useMemo(() => ({
+    transactions,
+    transactionsLoading,
+    budget,
+    budgetLoading,
+    setBudget,
+    addTransaction,
+    updateTransaction,
+    deleteTransaction,
+  }), [
+    transactions, transactionsLoading, budget, budgetLoading,
+    setBudget, addTransaction, updateTransaction, deleteTransaction,
+  ]);
 
-    <FinanceContext.Provider
-
-      value={{
-
-        transactions,
-
-        addTransaction,
-
-        deleteTransaction,
-
-        updateTransaction,
-      }}
-    >
-
-      {children}
-
-    </FinanceContext.Provider>
-  );
+  return <FinanceContext.Provider value={value}>{children}</FinanceContext.Provider>;
 }
 
 export function useFinance() {
-
-  const context =
-
-    useContext(
-      FinanceContext
-    );
-
-  if (!context) {
-
-    throw new Error(
-
-      "useFinance must be used within FinanceProvider"
-    );
-  }
-
+  const context = useContext(FinanceContext);
+  if (!context) throw new Error("useFinance must be used within FinanceProvider");
   return context;
 }

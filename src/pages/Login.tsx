@@ -1,4 +1,4 @@
-import { LogIn } from "lucide-react";
+import { ArrowUpRight, LogIn, ShieldCheck, Sparkles } from "lucide-react";
 import { loginWithGoogle } from "../firebase/auth";
 import backgroundImage from "../assets/quartly-bg.png";
 
@@ -94,26 +94,21 @@ export default function Login() {
 
           border-white/20
 
-          shadow-[0_0_100px_rgba(64,224,208,0.18)]
+          shadow-[0_28px_100px_rgba(28,43,60,0.18)]
 
-          animate-[float_8s_ease-in-out_infinite]
+          animate-[float_8s_ease-in-out_infinite] overflow-hidden
         "
       >
 
-        <h1
-          className="
-            text-6xl
+        <div className="mx-auto mb-7 flex h-14 w-14 items-center justify-center rounded-2xl border border-teal-400/25 bg-teal-400/10 text-teal-600 shadow-[0_8px_30px_rgba(64,224,208,.16)] dark:text-teal-300">
+          <Sparkles size={25} strokeWidth={1.8} />
+        </div>
 
-            font-bold
-
-            tracking-tight
-
-            mb-4
-          "
-        >
-
-          Quartly
-
+        <p className="mb-2 text-xs font-semibold uppercase tracking-[.28em] text-teal-700 dark:text-teal-300">
+          Your money, in focus
+        </p>
+        <h1 className="mb-4 text-5xl font-semibold tracking-[-.065em] sm:text-6xl">
+          Quartly<span className="text-teal-500">.</span>
         </h1>
 
         <p
@@ -126,7 +121,7 @@ export default function Login() {
           "
         >
 
-          Know where your money goes.
+          A clearer view of your money starts here.
         </p>
 
         <button
@@ -157,27 +152,29 @@ export default function Login() {
             transition-all
             duration-300
 
-            hover:scale-[1.03]
+            hover:-translate-y-0.5
 
-            hover:shadow-[0_0_40px_rgba(64,224,208,0.35)]
+            hover:shadow-[0_16px_40px_rgba(15,23,42,0.22)]
           "
         >
 
-          <LogIn size={22} />
-
+          <LogIn size={20} />
           Continue with Google
+          <ArrowUpRight size={17} className="ml-1 opacity-60" />
 
         </button>
 
+        <div className="mt-9 flex items-center justify-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+          <ShieldCheck size={14} className="text-teal-600 dark:text-teal-300" />
+          Private workspace · Secure Google sign-in
+        </div>
+
         <div
           className="
-            mt-10
-
+            mt-8
             border-t
-
-            border-white/20
-
-            pt-8
+            border-slate-200/70 dark:border-white/10
+            pt-7
           "
         >
 

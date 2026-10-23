@@ -98,53 +98,41 @@ Quartly follows a scalable component-based architecture designed for maintainabi
 
 # 📸 Screenshots
 
+## Light Mode
+
 ## Login Page
 
-![Dashboard](screenshots/quartly_login_page.jpeg)
-
-## Light Mode
+![Dashboard](screenshots/quartly-login-dark.png)
 
 ### Dashboard
 
-![Dashboard](screenshots/quartly_dashboard_light.png)
+![Dashboard](screenshots/quartly-dashboard-light.jpeg)
 
-### Transactions
+### Charts Page
 
-![Transactions](screenshots/quartly_transaction_form_and_list_light.png)
+![Transactions](screenshots/quartly-charts-light.jpeg)
 
-### Analytics
+### Budget Goals
 
-![Analytics](screenshots/quartly_piechart_bargraph_histogram_light.jpeg)
-
-### Transaction Modal
-
-![Transaction Modal](screenshots/quartly_transaction_modal_light.jpeg)
-
-### Insights Page
-
-![Insights Page](screenshots/quartly_insights_page_light.png)
+![Analytics](screenshots/quartly-budgetgoals-light.png)
 
 ## Dark Mode
 
+## Login Page Light
+
+![Dashboard](screenshots/quartly-login-light.png)
+
 ### Dashboard
 
-![Dashboard](screenshots/quartly_dashboard_dark.png)
+![Dashboard](screenshots/quartly-dashboard-dark.jpeg)
 
 ### Transactions
 
-![Transactions](screenshots/quartly_transaction_form_and_list_dark.png)
+![Transactions](screenshots/quartly-charts-dark.jpeg)
 
-### Analytics
+### Budget Goals
 
-![Analytics](screenshots/quartly_piechart_bargraph_histogram_dark.jpeg)
-
-### Transaction Modal
-
-![Transaction Modal](screenshots/quartly_transaction_modal_dark.jpeg)
-
-### Insights Page
-
-![Insights Page](screenshots/quartly_insights_page_dark.png)
+![Analytics](screenshots/quartly-budgetgoals-dark.png)
 
 ---
 
@@ -188,3 +176,17 @@ Quartly Personal Use License
 Personal, educational, portfolio, and learning use permitted.
 
 Commercial use, resale, sublicensing, SaaS offerings, redistribution for profit, and commercial derivatives are prohibited without written permission from Kenny Richardson Kodipally.
+
+
+## Interface refresh
+
+The interface now uses a more consistent Quartly visual system: restrained teal accents, softer glass surfaces, responsive spacing, tactile hover feedback, and shorter page transitions. Motion respects the operating system's reduced-motion preference. The original Firebase authentication, transaction flows, charts, and theme choice are retained.
+
+### Local development
+
+```bash
+npm install
+npm run dev
+```
+
+Run `npm run build` before deployment to check TypeScript and produce the production bundle.

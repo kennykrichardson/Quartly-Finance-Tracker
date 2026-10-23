@@ -165,7 +165,7 @@ export default function TransactionModal({
 
             bg-black/25
 
-            backdrop-blur-lg
+            backdrop-blur-sm
           "
 
           onClick={onClose}
@@ -212,7 +212,7 @@ export default function TransactionModal({
 
               overflow-hidden
 
-              shadow-[0_0_120px_rgba(64,224,208,0.25)]
+              shadow-[0_0_120px_rgba(220,20,60,0.25)]
 
               flex
               flex-col
@@ -365,10 +365,8 @@ className={`
 
                         ${
                           darkMode
-
-                            ? "bg-[#171b22]"
-
-                            : "bg-white"
+                            ? "bg-white/[0.045] border border-white/[0.08]"
+                            : "bg-white/55 border border-white/60 backdrop-blur-xl"
                         }
                       `}
                     >

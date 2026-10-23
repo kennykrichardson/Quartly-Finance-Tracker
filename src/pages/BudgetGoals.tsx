@@ -19,53 +19,38 @@ import type {
   ReactNode,
 } from "react";
 
-import { motion } from "framer-motion";
 
 import { useFinance } from "../context/FinanceContext";
 
 interface BudgetGoalsProps {
   isDarkMode?: boolean;
+  activePage: string;
+  setActivePage: (page: string) => void;
 }
 
 export default function BudgetGoals({
   isDarkMode,
+  activePage,
+  setActivePage,
 }: BudgetGoalsProps) {
 
-  const { transactions } =
-    useFinance();
+  const {
+    transactions,
+    budget,
+    budgetLoading,
+    setBudget,
+  } = useFinance();
 
-  const [budget,
-    setBudget] =
-    useState<number>(() => {
-
-      const saved =
-        localStorage.getItem(
-          "quartly-budget"
-        );
-
-      return saved
-        ? Number(saved)
-        : 50000;
-    });
-
-  const [editing,
-    setEditing] =
-    useState(false);
-
-  const [draftBudget,
-    setDraftBudget] =
-    useState(
-      budget.toString()
-    );
+  const [editing, setEditing] = useState(false);
+  const [draftBudget, setDraftBudget] = useState("50000");
+  const [budgetSaving, setBudgetSaving] = useState(false);
+  const [budgetError, setBudgetError] = useState("");
 
   useEffect(() => {
-
-    localStorage.setItem(
-      "quartly-budget",
-      budget.toString()
-    );
-
-  }, [budget]);
+    if (!editing && !budgetLoading) {
+      setDraftBudget(String(budget));
+    }
+  }, [budget, budgetLoading, editing]);
 
   const stats =
     useMemo(() => {
@@ -83,7 +68,7 @@ export default function BudgetGoals({
 
       const percentage =
         Math.min(
-          (spent / budget) * 100,
+          (budget > 0 ? (spent / budget) * 100 : 0),
           100
         );
 
@@ -190,7 +175,7 @@ export default function BudgetGoals({
 
       100 -
 
-      (spent /budget) * 50
+      (budget > 0 ? (spent / budget) * 50 : 0)
 
       +
 
@@ -238,37 +223,9 @@ const Card = ({
   children: ReactNode;
   className?: string;
 }) => (
-
-  <motion.div
-
-    whileHover={{
-      scale: 1.03,
-      y: -8,
-    }}
-
-    transition={{
-      duration: 0.35,
-      ease: [0.22, 1, 0.36, 1],
-    }}
-
-    className={`
-      glass
-
-      rounded-[32px]
-
-      p-6
-
-      shadow-black/5
-
-      hover:shadow-[0_20px_60px_rgba(0,0,0,0.18)]
-
-      ${className}
-    `}
-  >
-
+  <div className={`glass-premium rounded-[30px] p-6 ${className}`}>
     {children}
-
-  </motion.div>
+  </div>
 );
 
   return (
@@ -283,62 +240,11 @@ const Card = ({
         pt-8
         pb-12
 
-        transition-all
-        duration-300
 
-        ${
-          isDarkMode
-
-            ? "bg-[#0f1115] text-white"
-
-            : "bg-[#f8f8f7] text-black"
-        }
+        ${isDarkMode ? "text-white" : "text-black"}
       `}
     >
 
-      {isDarkMode && (
-
-        <>
-
-          <div
-            className="
-              fixed
-
-              top-0
-              left-0
-
-              w-[450px]
-              h-[450px]
-
-              bg-cyan-500/10
-
-              blur-[160px]
-
-              pointer-events-none
-            "
-          />
-
-          <div
-            className="
-              fixed
-
-              bottom-0
-              right-0
-
-              w-[450px]
-              h-[450px]
-
-              bg-cyan-400/10
-
-              blur-[160px]
-
-              pointer-events-none
-            "
-          />
-
-        </>
-
-      )}
 
       <div
         className="
@@ -350,32 +256,26 @@ const Card = ({
         "
       >
 
-        <h1
-          className="
-            text-5xl
-            font-bold
-
-            mb-3
-          "
-        >
-
-          Budget Goals
-
-        </h1>
-
-        <p
-          className="
-            text-[#8ea0b5]
-            text-lg
-            mb-10
-          "
-        >
-
-          Control spending,
-          monitor progress,
-          and stay ahead.
-
-        </p>
+        <header className="relative z-50 flex flex-wrap items-center justify-between gap-6 pt-3 xl:grid xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div className="xl:col-start-1 xl:row-start-1">
+            <h1 className="text-3xl font-semibold tracking-[-.055em] sm:text-4xl lg:text-[2.7rem]">
+              Quartly - By Ken Richardson
+            </h1>
+            <p className="mt-2 text-[#8ea0b5]">Control spending, monitor progress, and stay ahead.</p>
+          </div>
+          <nav aria-label="Main navigation" className="hidden items-center gap-1 rounded-full border border-white/30 bg-white/10 p-1 backdrop-blur-xl xl:col-start-2 xl:row-start-1 xl:flex xl:justify-self-center dark:border-white/15 dark:bg-slate-950/55 dark:shadow-[0_8px_28px_rgba(0,0,0,0.28)]">
+            {[
+              { label: "Overview", page: "dashboard" },
+              { label: "Charts", page: "charts-page" },
+              { label: "Budget Goals", page: "budgets" },
+            ].map((item) => (
+              <button key={item.page} onClick={() => setActivePage(item.page)}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${activePage === item.page ? "bg-white/80 text-slate-900 shadow-sm dark:bg-cyan-300/15 dark:text-cyan-100 dark:ring-1 dark:ring-inset dark:ring-cyan-200/15" : "text-slate-600 hover:bg-white/50 dark:text-slate-300 dark:hover:bg-white/10"}`}>
+                {item.label}
+              </button>
+            ))}
+          </nav>
+        </header>
 
           <div
             className="
@@ -412,15 +312,11 @@ const Card = ({
 
             <button
 
+              disabled={budgetLoading || budgetSaving}
               onClick={() => {
-
-                setDraftBudget(
-                  budget.toString()
-                );
-
-                setEditing(
-                  !editing
-                );
+                setBudgetError("");
+                setDraftBudget(String(budget));
+                setEditing((current) => !current);
               }}
 
               className="
@@ -430,9 +326,7 @@ const Card = ({
 
                 rounded-xl
 
-                hover:scale-105
 
-                transition-all
               "
             >
 
@@ -484,48 +378,43 @@ const Card = ({
               />
 
               <button
+                disabled={budgetSaving || budgetLoading}
+                onClick={async () => {
+                  const value = Number(draftBudget);
 
-                onClick={() => {
+                  if (!Number.isFinite(value) || value <= 0) {
+                    setBudgetError("Enter a valid budget greater than zero.");
+                    return;
+                  }
 
-                  const value =
-                    Number(
-                      draftBudget
-                    );
-
-                  if (
-                    value > 0
-                  ) {
-
-                    setBudget(
-                      value
-                    );
-
-                    setEditing(
-                      false
-                    );
+                  setBudgetSaving(true);
+                  setBudgetError("");
+                  try {
+                    await setBudget(value);
+                    setEditing(false);
+                  } catch (error) {
+                    console.error("Could not save the budget to Firebase.", error);
+                    setBudgetError("Budget could not be synced. Check your connection and Firestore rules, then try again.");
+                  } finally {
+                    setBudgetSaving(false);
                   }
                 }}
-
-                className="
-                  px-5
-                  py-3
-
-                  rounded-xl
-
-                  bg-cyan-500
-
-                  text-black
-                  font-semibold
-                "
+                className="glass-action rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-black disabled:cursor-not-allowed disabled:opacity-60"
               >
-
-                Save
-
+                {budgetSaving ? "Saving…" : "Save to Firebase"}
               </button>
 
             </div>
 
           ) : null}
+
+          {budgetError && (
+            <p className="mb-4 text-sm text-red-500" role="alert">{budgetError}</p>
+          )}
+
+          {budgetLoading && (
+            <p className="mb-4 text-sm text-muted-foreground" role="status">Loading your saved budget…</p>
+          )}
 
           <h2
             className="
@@ -564,8 +453,6 @@ const Card = ({
                 className={`
                   h-full
 
-                  transition-all
-                  duration-700
 
                   ${
                     stats.percentage >=

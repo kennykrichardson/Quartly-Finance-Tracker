@@ -20,17 +20,17 @@ type ButtonProps = CommonProps &
 type AnimatedButtonProps = AnchorProps | ButtonProps;
 
 const baseClass =
-  "focus-ring group relative inline-flex min-h-12 items-center justify-center overflow-hidden rounded px-6 py-3 text-sm font-black uppercase tracking-[0.08em] transition-colors duration-300 sm:px-8";
+  "focus-ring group relative inline-flex min-h-11 items-center justify-center overflow-hidden rounded-2xl px-5 py-3 text-sm font-semibold tracking-wide transition-colors duration-300 sm:px-6";
 
 const variantClass = {
   primary:
-    "bg-[#F0C34A] text-[#0A1016] shadow-[0_0_28px_rgba(240,195,74,0.32)] hover:shadow-[0_0_42px_rgba(240,195,74,0.48)]",
+    "bg-slate-900 text-white shadow-[0_10px_26px_rgba(15,23,42,.16)] hover:bg-teal-700 hover:shadow-[0_14px_34px_rgba(20,184,166,.22)] dark:bg-teal-300 dark:text-slate-950 dark:hover:bg-teal-200",
 
   secondary:
-    "bg-black/30 text-black backdrop-blur hover:bg-[#1679BF]/10",
+    "border border-slate-200/80 bg-white/70 text-slate-800 backdrop-blur hover:border-teal-300 hover:bg-teal-50/80 dark:border-white/10 dark:bg-white/[.04] dark:text-slate-100 dark:hover:bg-teal-400/10",
 
   ghost:
-    "bg-[#F0C34A]/10 text-white hover:bg-[#F0C34A]/20",
+    "bg-teal-500/10 text-teal-800 hover:bg-teal-500/15 dark:text-teal-200 dark:hover:bg-teal-400/20",
 };
 
 const buttonSpring = { type: "spring", stiffness: 310, damping: 24, mass: 0.75 } as const;

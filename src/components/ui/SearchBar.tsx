@@ -52,13 +52,13 @@ export default function SearchBar({
   return (
 
     <div className="
-      glass rounded-[32px]
-      p-4
+      glass rounded-[24px]
+      px-4 py-2
     ">
 
       <div className="
-        flex items-center
-        gap-4
+        flex h-9 items-center
+        gap-3
       ">
 
         <Search
@@ -153,7 +153,7 @@ export default function SearchBar({
             }}
 
             transition={{
-              duration: 0.25,
+              duration: 0.12,
             }}
 
             className="

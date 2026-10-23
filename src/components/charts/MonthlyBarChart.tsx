@@ -35,14 +35,14 @@ export default function MonthlyBarChart() {
   });
 
 const QUARTLY_COLORS = [
-  "#38BDF8", // Sky Blue
-  "#60A5FA", // Blue
+  "#0091ffed", // Sky Blue
+  "#3eabffed", // Blue
   "#3B82F6", // Bright Blue
-  "#2563EB", // Royal Blue
-  "#1D4ED8", // Deep Blue
-  "#93C5FD", // Soft Blue
-  "#0EA5E9", // Cyan Blue
-  "#7DD3FC", // Ice Blue
+  "#1D4ED8", // Royal Blue
+  "#38BDF8", // Deep Blue
+  "#7DD3FC", // Soft Blue
+  "#60A5FA", // Bright crimson
+  "#93C5FD", // Ice Blue
 ];
 
 
@@ -108,13 +108,13 @@ const QUARTLY_COLORS = [
 
 <XAxis
   dataKey="category"
-  stroke="#3eabffed"
+  stroke="#0091ffed"
   tickLine={false}
   axisLine={false}
 />
 
 <YAxis
-  stroke="#3eabffed"
+  stroke="#0091ffed"
   tickLine={false}
   axisLine={false}
 />
@@ -140,7 +140,7 @@ const QUARTLY_COLORS = [
                 0,
                 0,
               ]}
-              fill="#6bd8f7"
+              fill="#0091ffed"
             />
 
           </BarChart>
