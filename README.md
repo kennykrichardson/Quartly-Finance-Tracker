@@ -2,7 +2,7 @@
 
 > **Your money, made clearer.** A cloud-synced personal finance dashboard built to make everyday spending easier to understand.
 
-🌐 **Live app:** https://quartly.onrender.com
+🌐 **Live app:** https://quartly.kennykrichardson.com
 
 Quartly brings transactions, spending analytics, budget goals, and financial visualizations into one polished interface. Built with React, TypeScript, Firebase, and a carefully crafted glass-inspired UI, it keeps your financial picture organized across sessions and devices.
 
